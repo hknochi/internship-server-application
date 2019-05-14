@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS book;
+CREATE TABLE book(id serial PRIMARY KEY, name VARCHAR(100));
