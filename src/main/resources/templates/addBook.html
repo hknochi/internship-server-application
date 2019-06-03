@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cities</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/webjars/salesforce-lightning-design-system/2.5.2/styles/salesforce-lightning-design-system.min.css" />
+</head>
+
+<body>
+<h2>List of Books</h2>
+
+<header class="slds-global-header_container">
+    <div class="slds-global-header slds-grid slds-grid--align-spread">
+        <div class="slds-global-header__item">
+            <div class="slds-text-heading--large">Hello Spring - Book example </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="slds-container--center slds-container--medium" style="margin-top: 60px;">
+    <form action="#" th:action="@{'/books/add'}" th:object="${book}" method="post">
+        <div class="slds-text-heading--medium">Book</div>
+
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="tooltip-showing-form-element-help-01">Name</label>
+            <div class="slds-form-element__control">
+                <input type="text" id="tooltip-showing-form-element-help-01" placeholder="Enter name here" class="slds-input" th:field="*{name}" />
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="tooltip-showing-form-element-help-01">Price</label>
+            <div class="slds-form-element__control">
+                <input type="text" id="tooltip-showing-form-element-help-02" placeholder="Enter price here" class="slds-input" th:field="*{price}" />
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="tooltip-showing-form-element-help-01">ISBN</label>
+            <div class="slds-form-element__control">
+                <input type="text" id="tooltip-showing-form-element-help-03" placeholder="Enter ISBN here" class="slds-input" th:field="*{ISBN}" />
+            </div>
+            <div class="slds-form-element__control">
+                <input type="submit" value="Submit" class="slds-button slds-button_brand"/>
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <input type="hidden" class="slds-input" th:title="${book.id}" th:field="*{id}" />
+            <a class="btn btn-default" href="/books">go to books list</a>
+        </div>
+    </form>
+
+</div>
+
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+</body>
+</html>

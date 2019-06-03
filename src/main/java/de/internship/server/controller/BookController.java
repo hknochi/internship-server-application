@@ -7,11 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/books")
@@ -23,13 +22,47 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
-
-    @GetMapping("")
+    @GetMapping(value="")
     public String getbooks(Model model) {
         List books = (List<Book>) bookRepository.findAll();
-
         model.addAttribute("books", books);
         return "showBooks";
     }
+
+    @GetMapping(value="", consumes="application/json", produces="application/json")
+    @ResponseBody
+    public List<Book> getBooksAsJson() {
+        return (List<Book>) bookRepository.findAll();
+    }
+
+
+    @GetMapping("/{id}")
+    public String getBook(@PathVariable long id,  Model model) {
+        model.addAttribute("book", bookRepository.getOne(id));
+        return "addBook";
+    }
+
+    @GetMapping(value="/{id}", consumes="application/json", produces="application/json")
+    @ResponseBody
+    public Optional<Book> getBookAsJson(@PathVariable long id) {
+        return bookRepository.findById(id);
+    }
+
+    @GetMapping("/add")
+    public String getBook(Model model) {
+        model.addAttribute("book", new Book());
+        return "addBook";
+    }
+
+    @PostMapping(value="/add")
+    public String updateBook(@ModelAttribute Book book, Model model) {
+        bookRepository.save(book);
+
+        List books = (List<Book>) bookRepository.findAll();
+        model.addAttribute("books", books);
+        return "redirect:";
+    }
+
+
 
 }
