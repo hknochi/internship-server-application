@@ -49,7 +49,7 @@ public class UserProfile {
         this.password = password;
     }
 
-    public String getGender(String gender) {
+    public String getGender() {
         return this.gender;
     }
 
@@ -72,7 +72,6 @@ public class UserProfile {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    // constructors
 
     public int getYearOfBirth() {
         return yearOfBirth;
