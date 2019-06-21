@@ -1,0 +1,14 @@
+html, body {height:100%;}
+
+body {background-color:#F5F5F5;
+	align-items: center;
+	padding-top:20px;
+	padding-bottom: 40px;
+	display: flex;
+}
+.form-signin {
+    width: 150%;
+    max-width: 380px;
+    padding: 15px;
+    margin: 0 auto;
+}
