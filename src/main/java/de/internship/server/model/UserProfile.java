@@ -21,7 +21,7 @@ public class UserProfile {
 
     // getters and setters
 
-    UserProfile() {
+    public UserProfile() {
     }
 
     public UserProfile(String username, String password, String firstName, String lastName, String gender, int yearOfBirth) {
