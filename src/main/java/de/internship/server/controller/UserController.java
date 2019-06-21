@@ -53,6 +53,7 @@ public class UserController {
     }
 
     @PostMapping(value="/register", consumes = "application/json", produces = "application/json")
+    @ResponseBody
     public String registerJSON(@RequestBody UserProfile userprofile) {
         return registerUser(userprofile.getUsername(),userprofile.getPassword(),userprofile.getFirstName(),userprofile.getLastName(),userprofile.getGender(),userprofile.getYearOfBirth());
     }
