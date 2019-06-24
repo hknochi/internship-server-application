@@ -31,17 +31,24 @@ public class Message {
 
     // getters and setters
 
-    public Message(Long ID, String content, String transmitterUsername, String receiverUsername) {
-        this.msgId = ID;
-        this.msgContent = content;
+    public Message(Long msgID, String msgContent, String transmitterUsername, String receiverUsername) {
+        this.msgId = msgID;
+        this.msgContent = msgContent;
         this.transmitterUsername = transmitterUsername;
         this.receiverUsername = receiverUsername;
         this.sendTime = getTimeInMs();
     }
 
-    public Message(Long ID, String content, String transmitterUsername, String receiverUsername, long sendTime) {
-        this.msgId = ID;
-        this.msgContent = content;
+    public Message(String msgContent, String transmitterUsername, String receiverUsername, Long sendTime) {
+        this.msgContent = msgContent;
+        this.transmitterUsername = transmitterUsername;
+        this.receiverUsername = receiverUsername;
+        this.sendTime = getTimeInMs();
+    }
+
+    public Message(Long msgID, String msgContent, String transmitterUsername, String receiverUsername, long sendTime) {
+        this.msgId = msgID;
+        this.msgContent = msgContent;
         this.transmitterUsername = transmitterUsername;
         this.receiverUsername = receiverUsername;
         this.sendTime = sendTime;
