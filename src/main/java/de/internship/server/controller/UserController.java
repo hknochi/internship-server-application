@@ -165,4 +165,11 @@ public class UserController {
     public String loginJson(@RequestBody Login login) {
         return verifyUserLogin(login.getUsername(), login.getPassword());
     }
+
+    @GetMapping("/login.html")
+    public String loginHTML(Model model) {
+        return "login";
+    }
+
+
 }
