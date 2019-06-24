@@ -1,6 +1,7 @@
 package de.internship.server.controller;
 
 import de.internship.server.helper.Validator;
+import de.internship.server.model.Login;
 import de.internship.server.model.UserProfile;
 import de.internship.server.repository.UserProfileRepository;
 import org.slf4j.Logger;
@@ -154,6 +155,12 @@ public class UserController {
             }
         }
         return generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+    }
+
+    @PostMapping(value="/login", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public String loginJson(@RequestBody Login login) {
+        return verifyUserLogin(login.getUsername(),login.getPassword());
     }
 
     private String generateJson(int status, String message) {
