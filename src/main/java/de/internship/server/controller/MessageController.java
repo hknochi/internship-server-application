@@ -1,6 +1,7 @@
 package de.internship.server.controller;
 
 import de.internship.server.helper.Utils;
+import de.internship.server.helper.Validator;
 import de.internship.server.model.Message;
 import de.internship.server.repository.MessageRepository;
 import org.slf4j.Logger;
@@ -42,10 +43,33 @@ public class MessageController {
             @RequestParam String msgContent,
             @RequestParam Long sendTime
     ) {
-        Message tempMessageProfile = new Message(msgContent, msgTransmitter, msgReceiver, sendTime);
+        int statusValue=Validator.validateMsg(msgContent, msgTransmitter, msgReceiver, sendTime);
+        if(statusValue==1) {
+            return Utils.generateJson(0, "ERR_INV_ID");
+        } else if(statusValue==2) {
+            return Utils.generateJson(0, "ERR_INV_ID_ID_CLONED");
+        } else if(statusValue==3) {
+            return Utils.generateJson(0, "ERR_TRANSMITTER_EQUALS_RECEIVER");
+        } else if(statusValue==4) {
+            return Utils.generateJson(0, "ERR_MSG_EMPTY");
+        } else if(statusValue==5) {
+            return Utils.generateJson(0, "ERR_TIME_TRAVEL");
+        } else {
+            Message tempMessageProfile = new Message(msgContent, msgTransmitter, msgReceiver, sendTime);
 
-        messageRepository.save(tempMessageProfile);
-        return Utils.generateJson(1, "MSG_REG_SUCCESSFUL");
+            messageRepository.save(tempMessageProfile);
+            return Utils.generateJson(1, "MSG_REG_SUCCESSFUL");        }
+
     }
 
+    /*public boolean testMsgReg(int msgId) {
+        List<Message> messageList = messageRepository.findAll();
+        for (int i = 0; i < messageList.size(); i++) {
+            if (messageList.get(i).getMsgID().equals(msgId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    */
 }

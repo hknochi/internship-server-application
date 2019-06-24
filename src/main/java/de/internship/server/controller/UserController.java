@@ -1,6 +1,5 @@
 package de.internship.server.controller;
 
-import de.internship.server.helper.Utils;
 import de.internship.server.helper.Validator;
 import de.internship.server.model.Login;
 import de.internship.server.model.UserProfile;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import static de.internship.server.helper.Utils.generateJson;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -147,17 +148,17 @@ public class UserController {
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 if (userProfileList.get(i).getPassword().equals(password)) {
-                    return Utils.generateJson(1, "LOGIN_SUCCESSFUL");
+                    return generateJson(1, "LOGIN_SUCCESSFUL");
                 } else {
-                    return Utils.generateJson(0, "ERR_INV_PASSWORD");
+                    return generateJson(0, "ERR_INV_PASSWORD");
                 }
             } else {
                 if (i == userProfileList.size() - 1) {
-                    return Utils.generateJson(0, "ERR_INV_USERNAME");
+                    return generateJson(0, "ERR_INV_USERNAME");
                 }
             }
         }
-        return Utils.generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+        return generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
     }
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
