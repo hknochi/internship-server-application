@@ -137,7 +137,7 @@ public class UserController {
             }
         }
         userProfileRepository.save(tempUserProfile);
-        return "SUCCESSFULLY CREATED";
+        return Utils.generateJson(1,"SUCCESSFULLY CREATED");
     }
 
     @PostMapping(value = "/login")
