@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -157,7 +158,7 @@ public class UserController {
         }
         else
         {
-            return "login";
+            return "redirect:login.html";
         }
     }
 
