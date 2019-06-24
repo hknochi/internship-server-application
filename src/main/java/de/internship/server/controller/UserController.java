@@ -1,5 +1,6 @@
 package de.internship.server.controller;
 
+import de.internship.server.helper.Utils;
 import de.internship.server.helper.Validator;
 import de.internship.server.model.Login;
 import de.internship.server.model.UserProfile;
@@ -52,10 +53,10 @@ public class UserController {
         return "registration";
     }
 
-    @PostMapping(value="/register", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public String registerJSON(@RequestBody UserProfile userprofile) {
-        return registerUser(userprofile.getUsername(),userprofile.getPassword(),userprofile.getFirstName(),userprofile.getLastName(),userprofile.getGender(),userprofile.getYearOfBirth());
+        return registerUser(userprofile.getUsername(), userprofile.getPassword(), userprofile.getFirstName(), userprofile.getLastName(), userprofile.getGender(), userprofile.getYearOfBirth());
     }
 
     @PostMapping(value = "/register")
@@ -136,36 +137,32 @@ public class UserController {
             }
         }
         userProfileRepository.save(tempUserProfile);
-        return generateJson(1, "SUCCESSFULLY CREATED");
+        return "SUCCESSFULLY CREATED";
     }
 
     @GetMapping(value = "/login")
     @ResponseBody
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
         List<UserProfile> userProfileList = userProfileRepository.findAll();
-
-        String result = generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 if (userProfileList.get(i).getPassword().equals(password)) {
-                    result = generateJson(1, "LOGIN_SUCCESSFUL");
+                    return Utils.generateJson(1, "LOGIN_SUCCESSFUL");
                 } else {
-                    result = generateJson(0, "ERR_INV_PASSWORD");
+                    return Utils.generateJson(0, "ERR_INV_PASSWORD");
                 }
             } else {
-                result = generateJson(0, "ERR_INV_USERNAME");
+                if (i == userProfileList.size() - 1) {
+                    return Utils.generateJson(0, "ERR_INV_USERNAME");
+                }
             }
         }
-        return result;
+        return Utils.generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
     }
 
-    @PostMapping(value="/login", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public String loginJson(@RequestBody Login login) {
-        return verifyUserLogin(login.getUsername(),login.getPassword());
-    }
-
-    private String generateJson(int status, String message) {
-        return "{ \"status\": " + status + "," + "\"message\": " + "\"" + message + "\"" + "}";
+        return verifyUserLogin(login.getUsername(), login.getPassword());
     }
 }
