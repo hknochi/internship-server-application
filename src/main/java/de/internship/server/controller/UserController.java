@@ -136,7 +136,7 @@ public class UserController {
             }
         }
         userProfileRepository.save(tempUserProfile);
-        return "SUCCESSFULLY CREATED";
+        return generateJson(1, "SUCCESSFULLY CREATED");
     }
 
     @GetMapping(value = "/login")
