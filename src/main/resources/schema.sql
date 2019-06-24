@@ -8,3 +8,13 @@ gender VARCHAR(7) NOT NULL,
 year_of_birth SMALLINT NOT NULL,
 PRIMARY KEY(username)
 );
+
+
+DROP TABLE IF EXISTS message;
+CREATE TABLE message (
+msg_id INT NOT NULL,
+transmitter_username VARCHAR(16) NOT NULL,
+receiver_username VARCHAR(16) NOT NULL,
+msg_content VARCHAR,
+send_time INT NOT NULL
+);
