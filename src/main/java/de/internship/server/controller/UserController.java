@@ -154,7 +154,7 @@ public class UserController {
 
         if (loginStatus.equals(LOGIN_SUCCESSFUL))
         {
-            return "messages";
+            return "redirect:messages.html";
         }
         else
         {
@@ -192,13 +192,8 @@ public class UserController {
                 } else {
                     return ERROR_INVALID_PASSWORD;
                 }
-            } else {
-                if (i == userProfileList.size() - 1) {
-                    return ERROR_INVALID_USERNAME;
-                }
             }
         }
-        return ERROR_INVALID_INTERNAL_ERROR;
+        return ERROR_INVALID_USERNAME;
     }
-
 }
