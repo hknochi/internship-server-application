@@ -148,7 +148,6 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    @ResponseBody
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
         String loginStatus = getLoginStatus(username, password);
 
