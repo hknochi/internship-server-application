@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,7 +149,6 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    @ResponseBody
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
         String loginStatus = getLoginStatus(username, password);
 
@@ -158,7 +158,7 @@ public class UserController {
         }
         else
         {
-            return "login";
+            return "redirect:login.html";
         }
     }
 
