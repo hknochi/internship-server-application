@@ -18,6 +18,13 @@ import java.util.Optional;
 @Controller
 @RequestMapping(path = "/user")
 public class UserController {
+
+    public static final String LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
+    public static final String ERROR_INVALID_PASSWORD = "ERR_INV_PASSWORD";
+    public static final String ERROR_INVALID_USERNAME = "ERR_INV_USERNAME";
+    public static final String ERROR_INVALID_INTERNAL_ERROR = "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING";
+
+
     @Autowired
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -143,27 +150,31 @@ public class UserController {
     @PostMapping(value = "/login")
     @ResponseBody
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
-        List<UserProfile> userProfileList = userProfileRepository.findAll();
-        for (int i = 0; i < userProfileList.size(); i++) {
-            if (userProfileList.get(i).getUsername().equals(username)) {
-                if (userProfileList.get(i).getPassword().equals(password)) {
-                    return Utils.generateJson(1, "LOGIN_SUCCESSFUL");
-                } else {
-                    return Utils.generateJson(0, "ERR_INV_PASSWORD");
-                }
-            } else {
-                if (i == userProfileList.size() - 1) {
-                    return Utils.generateJson(0, "ERR_INV_USERNAME");
-                }
-            }
+        String loginStatus = getLoginStatus(username, password);
+
+        if (loginStatus.equals(LOGIN_SUCCESSFUL))
+        {
+            return "messages";
         }
-        return Utils.generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+        else
+        {
+            return "login";
+        }
     }
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public String loginJson(@RequestBody Login login) {
-        return verifyUserLogin(login.getUsername(), login.getPassword());
+        String loginStatus = getLoginStatus(login.getUsername(), login.getPassword());
+
+        if (loginStatus.equals(LOGIN_SUCCESSFUL))
+        {
+            return Utils.generateJson(1, LOGIN_SUCCESSFUL);
+        }
+        else
+        {
+            return Utils.generateJson(0, loginStatus);
+        }
     }
 
     @GetMapping("/login.html")
@@ -171,5 +182,23 @@ public class UserController {
         return "login";
     }
 
+    private String getLoginStatus(String username, String password)
+    {
+        List<UserProfile> userProfileList = userProfileRepository.findAll();
+        for (int i = 0; i < userProfileList.size(); i++) {
+            if (userProfileList.get(i).getUsername().equals(username)) {
+                if (userProfileList.get(i).getPassword().equals(password)) {
+                    return LOGIN_SUCCESSFUL;
+                } else {
+                    return ERROR_INVALID_PASSWORD;
+                }
+            } else {
+                if (i == userProfileList.size() - 1) {
+                    return ERROR_INVALID_USERNAME;
+                }
+            }
+        }
+        return ERROR_INVALID_INTERNAL_ERROR;
+    }
 
 }
