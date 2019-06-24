@@ -134,7 +134,6 @@ public class UserController {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 return generateJson(0, "ERR_USERNAME_ALREADY_EXISTS");
             }
-        }
         userProfileRepository.save(tempUserProfile);
         return generateJson(1, "SUCCESSFULLY CREATED");
     }
@@ -143,18 +142,20 @@ public class UserController {
     @ResponseBody
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
         List<UserProfile> userProfileList = userProfileRepository.findAll();
+
+        String result = generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 if (userProfileList.get(i).getPassword().equals(password)) {
-                    return generateJson(1, "LOGIN_SUCCESSFUL");
+                    result = generateJson(1, "LOGIN_SUCCESSFUL");
                 } else {
-                    return generateJson(0, "ERR_INV_PASSWORD");
+                    result = generateJson(0, "ERR_INV_PASSWORD");
                 }
             } else {
-                return generateJson(0, "ERR_INV_USERNAME");
+                result = generateJson(0, "ERR_INV_USERNAME");
             }
         }
-        return generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+        return result;
     }
 
     @PostMapping(value="/login", consumes = "application/json", produces = "application/json")
