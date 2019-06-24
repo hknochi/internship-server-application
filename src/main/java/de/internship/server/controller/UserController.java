@@ -140,7 +140,7 @@ public class UserController {
         return "SUCCESSFULLY CREATED";
     }
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     @ResponseBody
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
         List<UserProfile> userProfileList = userProfileRepository.findAll();
