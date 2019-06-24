@@ -134,9 +134,9 @@ public class UserController {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 return generateJson(0, "ERR_USERNAME_ALREADY_EXISTS");
             }
-            userProfileRepository.save(tempUserProfile);
-            return generateJson(1, "SUCCESSFULLY CREATED");
         }
+        userProfileRepository.save(tempUserProfile);
+        return generateJson(1, "SUCCESSFULLY CREATED");
     }
 
     @GetMapping(value = "/login")
