@@ -1,5 +1,6 @@
 package de.internship.server.controller;
 
+import de.internship.server.helper.Utils;
 import de.internship.server.helper.Validator;
 import de.internship.server.model.Login;
 import de.internship.server.model.UserProfile;
@@ -14,11 +15,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static de.internship.server.helper.Utils.generateJson;
-
 @Controller
 @RequestMapping(path = "/user")
 public class UserController {
+
+    public static final String LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
+    public static final String ERROR_INVALID_PASSWORD = "ERR_INV_PASSWORD";
+    public static final String ERROR_INVALID_USERNAME = "ERR_INV_USERNAME";
+    public static final String ERROR_INVALID_INTERNAL_ERROR = "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING";
+
+
     @Autowired
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -66,11 +72,11 @@ public class UserController {
 
         if (Validator.validateString(username, 2, 16, false, false, false)
                 == 1) {
-            return generateJson(0, "INTERNAL_ERROR_USERNAME_INV_ARG");
+            return Utils.generateJson(0, "INTERNAL_ERROR_USERNAME_INV_ARG");
         }
         if (Validator.validateString(username, 2, 16, false, false, false)
                 == 2) {
-            return generateJson(0, "ERR_USERNAME_LENGTH_INADEQUATE");
+            return Utils.generateJson(0, "ERR_USERNAME_LENGTH_INADEQUATE");
         }
         /*if(Validator.validateString(username, 2, 16, false, false, false)
                 == 3) {
@@ -78,54 +84,54 @@ public class UserController {
         }*/
         if (Validator.validateString(password, 8, 32, true, false, false)
                 == 1) {
-            return generateJson(0, "INTERNAL_ERR_PASSWORD_INV_ARG");
+            return Utils.generateJson(0, "INTERNAL_ERR_PASSWORD_INV_ARG");
         }
         if (Validator.validateString(password, 8, 32, true, false, false)
                 == 2) {
-            return generateJson(0, "ERR_PASSWORD_LENGTH_INADEQUATE");
+            return Utils.generateJson(0, "ERR_PASSWORD_LENGTH_INADEQUATE");
         }
         if (Validator.validateString(password, 8, 32, true, false, false)
                 == 3) {
-            return generateJson(0, "ERR_PASSWORD_NOT_ALPHANUMERIC");
+            return Utils.generateJson(0, "ERR_PASSWORD_NOT_ALPHANUMERIC");
         }
         if (Validator.validateString(firstName, 2, 20, false, true, false)
                 == 1) {
-            return generateJson(0, "INTERNAL_ERR_FIRST_NAME_INV_ARG");
+            return Utils.generateJson(0, "INTERNAL_ERR_FIRST_NAME_INV_ARG");
         }
         if (Validator.validateString(firstName, 2, 20, false, true, false)
                 == 2) {
-            return generateJson(0, "ERR_FIRST_NAME_LENGTH_INADEQUATE");
+            return Utils.generateJson(0, "ERR_FIRST_NAME_LENGTH_INADEQUATE");
         }
         if (Validator.validateString(firstName, 2, 20, false, true, false)
                 == 4) {
-            return generateJson(0, "ERR_FIRST_NAME_NOT_ALPHABETIC");
+            return Utils.generateJson(0, "ERR_FIRST_NAME_NOT_ALPHABETIC");
         }
         if (Validator.validateString(lastName, 2, 20, false, true, false)
                 == 1) {
-            return generateJson(0, "INTERNAL_ERR_LAST_NAME_INV_ARG");
+            return Utils.generateJson(0, "INTERNAL_ERR_LAST_NAME_INV_ARG");
         }
         if (Validator.validateString(lastName, 2, 20, false, true, false)
                 == 2) {
-            return generateJson(0, "ERR_LAST_NAME_LENGTH_INADEQUATE");
+            return Utils.generateJson(0, "ERR_LAST_NAME_LENGTH_INADEQUATE");
         }
         if (Validator.validateString(lastName, 2, 20, false, true, false)
                 == 4) {
-            return generateJson(0, "ERR_LAST_NAME_NOT_ALPHABETIC");
+            return Utils.generateJson(0, "ERR_LAST_NAME_NOT_ALPHABETIC");
         }
         if (Validator.validateString(gender, 4, 7, false, false, true)
                 == 1) {
-            return generateJson(0, "INTERNAL_ERR_GENDER_INV_ARG");
+            return Utils.generateJson(0, "INTERNAL_ERR_GENDER_INV_ARG");
         }
         if (Validator.validateString(gender, 4, 7, false, false, true)
                 == 5) {
-            return generateJson(0, "ERR_INV_GENDER");
+            return Utils.generateJson(0, "ERR_INV_GENDER");
         }
         if (Validator.validateInt(yearOfBirth)
                 == 1) {
-            return generateJson(0, "ERR_YEAR_OF_BIRTH_TOO_LOW");
+            return Utils.generateJson(0, "ERR_YEAR_OF_BIRTH_TOO_LOW");
         } else if (Validator.validateInt(yearOfBirth)
                 == 2) {
-            return generateJson(0, "ERR_YEAR_OF_BIRTH_TOO_HIGH");
+            return Utils.generateJson(0, "ERR_YEAR_OF_BIRTH_TOO_HIGH");
         }
 
         UserProfile tempUserProfile = new UserProfile(username, password, firstName, lastName, gender, yearOfBirth);
@@ -134,36 +140,64 @@ public class UserController {
         List<UserProfile> userProfileList = userProfileRepository.findAll();
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
-                return generateJson(0, "ERR_USERNAME_ALREADY_EXISTS");
+                return Utils.generateJson(0, "ERR_USERNAME_ALREADY_EXISTS");
             }
         }
         userProfileRepository.save(tempUserProfile);
-        return "SUCCESSFULLY CREATED";
+        return Utils.generateJson(1,"SUCCESSFULLY CREATED");
     }
 
-    @GetMapping(value = "/login")
-    @ResponseBody
+    @PostMapping(value = "/login")
     public String verifyUserLogin(@RequestParam String username, @RequestParam String password) {
-        List<UserProfile> userProfileList = userProfileRepository.findAll();
-        for (int i = 0; i < userProfileList.size(); i++) {
-            if (userProfileList.get(i).getUsername().equals(username)) {
-                if (userProfileList.get(i).getPassword().equals(password)) {
-                    return generateJson(1, "LOGIN_SUCCESSFUL");
-                } else {
-                    return generateJson(0, "ERR_INV_PASSWORD");
-                }
-            } else {
-                if (i == userProfileList.size() - 1) {
-                    return generateJson(0, "ERR_INV_USERNAME");
-                }
-            }
+        String loginStatus = getLoginStatus(username, password);
+
+        if (loginStatus.equals(LOGIN_SUCCESSFUL))
+        {
+            return "redirect:messages.html";
         }
-        return generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+        else
+        {
+            return "redirect:login.html";
+        }
     }
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public String loginJson(@RequestBody Login login) {
-        return verifyUserLogin(login.getUsername(), login.getPassword());
+        String loginStatus = getLoginStatus(login.getUsername(), login.getPassword());
+
+        if (loginStatus.equals(LOGIN_SUCCESSFUL))
+        {
+            return Utils.generateJson(1, LOGIN_SUCCESSFUL);
+        }
+        else
+        {
+            return Utils.generateJson(0, loginStatus);
+        }
     }
+
+    @GetMapping("/login.html")
+    public String loginHTML(Model model) {
+        return "login";
+    }
+
+    private String getLoginStatus(String username, String password)
+    {
+        List<UserProfile> userProfileList = userProfileRepository.findAll();
+        for (int i = 0; i < userProfileList.size(); i++) {
+            if (userProfileList.get(i).getUsername().equals(username)) {
+                if (userProfileList.get(i).getPassword().equals(password)) {
+                    return Utils.generateJson(1, "LOGIN_SUCCESSFUL");
+                } else {
+                    return Utils.generateJson(0, "ERR_INV_PASSWORD");
+                }
+            } else {
+                if (i == userProfileList.size() - 1) {
+                    return Utils.generateJson(0, "ERR_INV_USERNAME");
+                }
+            }
+        }
+        return Utils.generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+    }
+    
 }

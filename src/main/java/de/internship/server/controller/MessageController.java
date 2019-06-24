@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,14 +63,8 @@ public class MessageController {
 
     }
 
-    /*public boolean testMsgReg(int msgId) {
-        List<Message> messageList = messageRepository.findAll();
-        for (int i = 0; i < messageList.size(); i++) {
-            if (messageList.get(i).getMsgID().equals(msgId)) {
-                return true;
-            }
-        }
-        return false;
+    @GetMapping("/messages.html")
+    public String messagesHTML(Model model) {
+        return "messages";
     }
-    */
 }
