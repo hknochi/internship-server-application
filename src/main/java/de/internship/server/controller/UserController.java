@@ -50,67 +50,66 @@ public class UserController {
 
         if (Validator.validateString(username, 2, 16, false, false, false)
                 == 1) {
-            return "INTERNAL_ERR_USERNAME_INV_ARG";
+            return generateJson(0, "INTERNAL_ERROR_USERNAME_INV_ARG");
         }
         if (Validator.validateString(username, 2, 16, false, false, false)
                 == 2) {
-            return "ERR_USERNAME_LENGTH_INADEQUATE";
+            return generateJson(0, "ERR_USERNAME_LENGTH_INADEQUATE");
         }
         /*if(Validator.validateString(username, 2, 16, false, false, false)
                 == 3) {
             return "ERR_USERNAME_NOT_ALPHANUMERIC";
         }*/
-        System.out.println("fn validator " + Validator.validateString(firstName, 2, 20, false, true, false));
         if (Validator.validateString(password, 8, 32, true, false, false)
                 == 1) {
-            return "INTERNAL_ERR_PASSWORD_INV_ARG";
+            return generateJson(0, "INTERNAL_ERR_PASSWORD_INV_ARG");
         }
         if (Validator.validateString(password, 8, 32, true, false, false)
                 == 2) {
-            return "ERR_PASSWORD_LENGTH_INADEQUATE";
+            return generateJson(0, "ERR_PASSWORD_LENGTH_INADEQUATE");
         }
         if (Validator.validateString(password, 8, 32, true, false, false)
                 == 3) {
-            return "ERR_PASSWORD_NOT_ALPHANUMERIC";
+            return generateJson(0, "ERR_PASSWORD_NOT_ALPHANUMERIC");
         }
         if (Validator.validateString(firstName, 2, 20, false, true, false)
                 == 1) {
-            return "INTERNAL_ERR_FIRST_NAME_INV_ARG";
+            return generateJson(0, "INTERNAL_ERR_FIRST_NAME_INV_ARG");
         }
         if (Validator.validateString(firstName, 2, 20, false, true, false)
                 == 2) {
-            return "ERR_FIRST_NAME_LENGTH_INADEQUATE";
+            return generateJson(0, "ERR_FIRST_NAME_LENGTH_INADEQUATE");
         }
         if (Validator.validateString(firstName, 2, 20, false, true, false)
                 == 4) {
-            return "ERR_FIRST_NAME_NOT_ALPHABETIC";
+            return generateJson(0, "ERR_FIRST_NAME_NOT_ALPHABETIC");
         }
         if (Validator.validateString(lastName, 2, 20, false, true, false)
                 == 1) {
-            return "INTERNAL_ERR_LAST_NAME_INV_ARG";
+            return generateJson(0, "INTERNAL_ERR_LAST_NAME_INV_ARG");
         }
         if (Validator.validateString(lastName, 2, 20, false, true, false)
                 == 2) {
-            return "ERR_LAST_NAME_LENGTH_INADEQUATE";
+            return generateJson(0, "ERR_LAST_NAME_LENGTH_INADEQUATE");
         }
         if (Validator.validateString(lastName, 2, 20, false, true, false)
                 == 4) {
-            return "ERR_LAST_NAME_NOT_ALPHABETIC";
+            return generateJson(0, "ERR_LAST_NAME_NOT_ALPHABETIC");
         }
         if (Validator.validateString(gender, 4, 7, false, false, true)
                 == 1) {
-            return "INTERNAL_ERR_GENDER_INV_ARG";
+            return generateJson(0, "INTERNAL_ERR_GENDER_INV_ARG");
         }
         if (Validator.validateString(gender, 4, 7, false, false, true)
                 == 5) {
-            return "ERR_INV_GENDER";
+            return generateJson(0, "ERR_INV_GENDER");
         }
         if (Validator.validateInt(yearOfBirth)
                 == 1) {
-            return "ERR_YEAR_OF_BIRTH_TOO_LOW";
+            return generateJson(0, "ERR_YEAR_OF_BIRTH_TOO_LOW");
         } else if (Validator.validateInt(yearOfBirth)
                 == 2) {
-            return "ERR_YEAR_OF_BIRTH_TOO_HIGH";
+            return generateJson(0, "ERR_YEAR_OF_BIRTH_TOO_HIGH");
         }
 
         UserProfile tempUserProfile = new UserProfile(username, password, firstName, lastName, gender, yearOfBirth);
@@ -119,11 +118,11 @@ public class UserController {
         List<UserProfile> userProfileList = userProfileRepository.findAll();
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
-                return "ERR_USERNAME_ALREADY_EXISTS";
+                return generateJson(0, "ERR_USERNAME_ALREADY_EXISTS");
             }
         }
         userProfileRepository.save(tempUserProfile);
-        return "SUCCESSFULLY CREATED";
+        return generateJson(1, "SUCCESSFUL");
     }
 
     @GetMapping(value = "/login")
@@ -133,14 +132,18 @@ public class UserController {
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 if (userProfileList.get(i).getPassword().equals(password)) {
-                    return "LOGIN_SUCCESSFUL";
+                    return generateJson(1, "LOGIN_SUCCESSFUL");
                 } else {
-                    return "ERR_INVALID_PASSWORD";
+                    return generateJson(0, "ERR_INV_PASSWORD");
                 }
             } else {
-                return "ERR_INVALID_USERNAME";
+                return generateJson(0, "ERR_INV_USERNAME");
             }
         }
-        return "INTERNAL_ERR_FUNCTION_CONTROL_BRIDGING";
+        return generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+    }
+
+    private String generateJson(int status, String message) {
+        return "{ \"status\": " + status + "," + "\"message\": " + "\"" + message + "\"" + "}";
     }
 }
