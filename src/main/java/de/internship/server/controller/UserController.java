@@ -22,7 +22,6 @@ public class UserController {
     public static final String LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
     public static final String ERROR_INVALID_PASSWORD = "ERR_INV_PASSWORD";
     public static final String ERROR_INVALID_USERNAME = "ERR_INV_USERNAME";
-    public static final String ERROR_INVALID_INTERNAL_ERROR = "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING";
 
 
     @Autowired
@@ -34,11 +33,7 @@ public class UserController {
     @GetMapping(value = "", produces = "application/json")
     @ResponseBody
     public List<UserProfile> getUserListAsJson() {
-        List<UserProfile> userProfileList = userProfileRepository.findAll();
-        for (int i = 0; i < userProfileList.size(); i++) {
-            userProfileList.get(i).setPassword("<ausgeblendet>");
-        }
-        return userProfileList;
+        return getAllUsers();
     }
 
     @GetMapping(value = "/{username}", produces = "application/json")
@@ -153,11 +148,11 @@ public class UserController {
 
         if (loginStatus.equals(LOGIN_SUCCESSFUL))
         {
-            return "redirect:messages.html";
+            return "redirect:message/messages.html";
         }
         else
         {
-            return "redirect:login.html";
+            return "redirect:user/login.html";
         }
     }
 
@@ -187,17 +182,20 @@ public class UserController {
         for (int i = 0; i < userProfileList.size(); i++) {
             if (userProfileList.get(i).getUsername().equals(username)) {
                 if (userProfileList.get(i).getPassword().equals(password)) {
-                    return Utils.generateJson(1, "LOGIN_SUCCESSFUL");
+                    return LOGIN_SUCCESSFUL;
                 } else {
-                    return Utils.generateJson(0, "ERR_INV_PASSWORD");
-                }
-            } else {
-                if (i == userProfileList.size() - 1) {
-                    return Utils.generateJson(0, "ERR_INV_USERNAME");
+                    return ERROR_INVALID_PASSWORD;
                 }
             }
         }
-        return Utils.generateJson(0, "INTERNAL_ERROR_FUNCTION_CONTROL_BRIDGING");
+        return ERROR_INVALID_USERNAME;
     }
-    
+
+    public List<UserProfile> getAllUsers() {
+        List<UserProfile> userProfileList = userProfileRepository.findAll();
+        for (int i = 0; i < userProfileList.size(); i++) {
+            userProfileList.get(i).setPassword("<ausgeblendet>");
+        }
+        return userProfileList;
+    }
 }

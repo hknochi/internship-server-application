@@ -9,6 +9,6 @@ public class HomeController {
 
     @RequestMapping("/")
     String index() {
-        return "Greetings from Spring Boot!";
+        return "redirect:user/login.html";
     }
 }

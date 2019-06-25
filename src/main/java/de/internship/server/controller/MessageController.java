@@ -65,6 +65,7 @@ public class MessageController {
 
     @GetMapping("/messages.html")
     public String messagesHTML(Model model) {
+        model.addAttribute("users", new UserController().getAllUsers());
         return "messages";
     }
 }
