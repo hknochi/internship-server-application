@@ -45,7 +45,7 @@ public class MessageController {
     @PostMapping(value = "/registerMessage", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public String registerMessage(@RequestBody Message message) {
-        message.setSendTime(message.getTimeInMs());
+        message.setSendTime(Utils.getTimeInMs());
         String loginStatus = validateMessage(message.getMsgContent(), message.getTransmitterUsername(), message.getReceiverUsername(), message.getSendTime());
 
         if (loginStatus.equals(MSG_REG_SUCCESSFUL))
@@ -64,7 +64,7 @@ public class MessageController {
     @PostMapping("/registerMessage")
     public String registerMessageHTML(Model model, @RequestParam String transmitterUsername, @RequestParam String receiverUsername, @RequestParam String msgContent) {
 
-        long time = Message.getTimeInMs();
+        long time = Utils.getTimeInMs();
         String loginStatus = validateMessage(msgContent, transmitterUsername, receiverUsername, time);
 
         if (loginStatus.equals(MSG_REG_SUCCESSFUL))
