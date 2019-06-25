@@ -26,6 +26,9 @@ public class MessageController {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private UserController userController;
+
     @GetMapping(value = "", produces = "application/json")
     @ResponseBody
     public List<Message> getMessageListAsJson() {
@@ -69,17 +72,17 @@ public class MessageController {
             Message tempUserProfile = new Message(msgContent, transmitterUsername, receiverUsername, time);
             messageRepository.save(tempUserProfile);
 
-            return "redirect:message/messages.html";
+            return "redirect:/message/messages.html";
         }
         else
         {
-            return "redirect:message/messages.html";
+            return "redirect:/message/messages.html";
         }
     }
 
     @GetMapping("/messages.html")
     public String messagesHTML(Model model) {
-        model.addAttribute("users", new UserController().getAllUsers());
+        model.addAttribute("users", userController.getAllUsers());
         return "messages";
     }
 

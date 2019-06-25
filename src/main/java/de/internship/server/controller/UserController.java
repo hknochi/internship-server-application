@@ -59,11 +59,11 @@ public class UserController {
             UserProfile tempUserProfile = new UserProfile(username, password, firstName, lastName, gender, yearOfBirth);
             userProfileRepository.save(tempUserProfile);
 
-            return "redirect:message/messages.html";
+            return "redirect:/message/messages.html";
         }
         else
         {
-            return "redirect:user/registration.html";
+            return "redirect:/registration.html";
         }
     }
 
@@ -95,11 +95,11 @@ public class UserController {
 
         if (loginStatus.equals(LOGIN_SUCCESSFUL))
         {
-            return "redirect:message/messages.html";
+            return "redirect:/message/messages.html";
         }
         else
         {
-            return "redirect:user/login.html";
+            return "redirect:/login.html";
         }
     }
 

@@ -1,26 +1,27 @@
 package de.internship.server.controller;
 
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
+@Controller
+@RequestMapping(path = "/")
 public class HomeController {
 
-    @RequestMapping("/")
-    String index() {
-        return "redirect:user/login.html";
+    @GetMapping("")
+    public String index() {
+        return "redirect:login.html";
     }
 
-    @GetMapping("/login.html")
-    public String loginHTML(Model model) {
+    @GetMapping("login.html")
+    public String loginHTML() {
         return "login";
     }
 
-    @GetMapping("/registration.html")
-    public String registrationHTML(Model model) {
+    @GetMapping("registration.html")
+    public String registrationHTML() {
         return "registration";
     }
 }
