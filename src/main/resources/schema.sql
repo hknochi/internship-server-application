@@ -16,5 +16,5 @@ msg_id INT NOT NULL,
 transmitter_username VARCHAR(16) NOT NULL,
 receiver_username VARCHAR(16) NOT NULL,
 msg_content VARCHAR(140),
-send_time INT NOT NULL
+send_time BIGINT NOT NULL
 );

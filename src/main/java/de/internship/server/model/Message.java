@@ -39,7 +39,7 @@ public class Message {
         this.sendTime = getTimeInMs();
     }
 
-    public Message(String msgContent, String transmitterUsername, String receiverUsername, Long sendTime) {
+    public Message(String msgContent, String transmitterUsername, String receiverUsername, long sendTime) {
         this.msgContent = msgContent;
         this.transmitterUsername = transmitterUsername;
         this.receiverUsername = receiverUsername;
@@ -54,7 +54,7 @@ public class Message {
         this.sendTime = sendTime;
     }
 
-    public long getTimeInMs() {
+    public static long getTimeInMs() {
         Date date = new Date();
         return date.getTime();
     }
