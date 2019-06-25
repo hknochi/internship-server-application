@@ -1,12 +1,12 @@
 package de.internship.server.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import de.internship.server.helper.Utils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -31,39 +31,34 @@ public class Message {
 
     // getters and setters
 
-    public Message(Long msgID, String msgContent, String transmitterUsername, String receiverUsername) {
-        this.msgId = msgID;
+    public Message(Long msgId, String msgContent, String transmitterUsername, String receiverUsername) {
+        this.msgId = msgId;
         this.msgContent = msgContent;
         this.transmitterUsername = transmitterUsername;
         this.receiverUsername = receiverUsername;
-        this.sendTime = getTimeInMs();
+        this.sendTime = Utils.getTimeInMs();
     }
 
-    public Message(String msgContent, String transmitterUsername, String receiverUsername, Long sendTime) {
+    public Message(String msgContent, String transmitterUsername, String receiverUsername, long sendTime) {
         this.msgContent = msgContent;
         this.transmitterUsername = transmitterUsername;
         this.receiverUsername = receiverUsername;
-        this.sendTime = getTimeInMs();
+        this.sendTime =  Utils.getTimeInMs();
     }
 
-    public Message(Long msgID, String msgContent, String transmitterUsername, String receiverUsername, long sendTime) {
-        this.msgId = msgID;
+    public Message(Long msgId, String msgContent, String transmitterUsername, String receiverUsername, long sendTime) {
+        this.msgId = msgId;
         this.msgContent = msgContent;
         this.transmitterUsername = transmitterUsername;
         this.receiverUsername = receiverUsername;
         this.sendTime = sendTime;
     }
 
-    public long getTimeInMs() {
-        Date date = new Date();
-        return date.getTime();
-    }
-
-    public Long getMsgID() {
+    public Long getMsgId() {
         return msgId;
     }
 
-    public void setMsgID(Long ID) {
+    public void setMsgId(Long msgId) {
         this.msgId = msgId;
     }
 

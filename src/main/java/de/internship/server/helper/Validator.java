@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 
 public class Validator {
+
+
     public static int validateString(String value, int minLength, int maxLength, boolean requiresAlnum, boolean requiresAl, boolean isGenderChoice) {
         System.out.println("validation value:" + value);
         if ((requiresAlnum && requiresAl) || (requiresAlnum && isGenderChoice) || (requiresAl && isGenderChoice)) {
@@ -62,7 +64,7 @@ public class Validator {
     ---
      */
 
-    public static int validateMsg(/*Long msgId,*/ String transmitterUsername, String receiverUsername, String msgContent, long sendTime) {
+    public static int validateMsg(/*Long msgId,*/ String msgContent, String transmitterUsername, String receiverUsername, long sendTime) {
         /*if(msgId < 0) {
             return 1;
         }
@@ -73,11 +75,16 @@ public class Validator {
         if(transmitterUsername.equals(receiverUsername)) {
             return 3;
         }
+
         if(msgContent.length()<1) {
             return 4;
         }
-        if(sendTime<0) {
+
+        if(msgContent.length()>140) {
             return 5;
+        }
+        if(sendTime<1) {
+            return 6;
         }
         return 0;
         /*
@@ -86,11 +93,11 @@ public class Validator {
         1/invalid message id
         2/msg id duplicate
         3/transmitter equals receiver, that is not allowed
-        4/empty message
-        5/time travel is not allowed yet either
+        4/inadequate length, msg empty (.length()<=0)
+        5/inadequate length, msg too long (.length()>140)
+        6/time travel is not yet allowed either
          */
     }
-
 
 
 
