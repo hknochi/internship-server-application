@@ -18,8 +18,9 @@ public class HomeController {
     }
 
     @GetMapping("login.html")
-    public String loginHTML(@ModelAttribute("username") String usernameAttr, Model model) {
-        model.addAttribute("username", usernameAttr);
+    public String loginHTML(@ModelAttribute("sender") String sender, @ModelAttribute("receiver") String receiver, Model model) {
+        model.addAttribute("sender", sender);
+        model.addAttribute("receiver", receiver);
         return "login";
     }
 
