@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +63,7 @@ public class MessageController {
     }
 
     @PostMapping("/registerMessage")
-    public String registerMessageHTML(Model model, @RequestParam String transmitterUsername, @RequestParam String receiverUsername, @RequestParam String msgContent) {
+    public String registerMessageHTML(Model model, @RequestParam String transmitterUsername, @RequestParam String receiverUsername, @RequestParam String msgContent, RedirectAttributes redirectAttrs) {
 
         long time = Utils.getTimeInMs();
         String loginStatus = validateMessage(msgContent, transmitterUsername, receiverUsername, time);
@@ -72,10 +73,14 @@ public class MessageController {
             Message tempUserProfile = new Message(msgContent, transmitterUsername, receiverUsername, time);
             messageRepository.save(tempUserProfile);
 
+            redirectAttrs.addAttribute("sender", transmitterUsername);
+            redirectAttrs.addAttribute("receiver", receiverUsername);
             return "redirect:/message/messages.html";
         }
         else
         {
+            redirectAttrs.addAttribute("sender", transmitterUsername);
+            redirectAttrs.addAttribute("receiver", receiverUsername);
             return "redirect:/message/messages.html";
         }
     }
