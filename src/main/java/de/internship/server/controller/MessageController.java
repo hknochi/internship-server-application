@@ -86,8 +86,15 @@ public class MessageController {
     }
 
     @GetMapping("/messages.html")
-    public String messagesHTML(Model model) {
+    public String messagesHTML(Model model, @ModelAttribute("sender") String sender, @ModelAttribute("receiver") String receiver) {
         model.addAttribute("users", userController.getAllUsers());
+        model.addAttribute("messages", messageRepository.findAll());
+        model.addAttribute("sender", sender);
+        model.addAttribute("receiver", receiver);
+        Message newMessage = new Message();
+        newMessage.setReceiverUsername(receiver);
+        newMessage.setTransmitterUsername(sender);
+        model.addAttribute("newMessage", newMessage);
         return "messages";
     }
 

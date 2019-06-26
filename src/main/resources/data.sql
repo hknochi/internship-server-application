@@ -10,7 +10,13 @@ insert into user_profile (username, password, first_name, last_name, gender, yea
 ( 'waschbecken', 'geburtstagmeineroma', 'Gisella', 'Rothe', 'female', 1988);
 
 insert into message (msg_id, transmitter_username, receiver_username, msg_content, send_time) values
-( 998877, 'kleiderschrank', 'waschbecken', 'Dreh mal bitte den Hahn ab und zieh den Stöpsel.', 1561375194);
+( 1, 'kleiderschrank', 'waschbecken', 'Dreh mal bitte den Hahn ab und zieh den Stöpsel.', 1561375194);
+insert into message (msg_id, transmitter_username, receiver_username, msg_content, send_time) values
+( 2, 'apfelkuchen', 'kleiderschrank', 'Sag mal sind noch Hosen da?', 1561395194);
+insert into message (msg_id, transmitter_username, receiver_username, msg_content, send_time) values
+( 3, 'bratwurst', 'apfelkuchen', 'Wie schaut es aus?', 1561395194);
+insert into message (msg_id, transmitter_username, receiver_username, msg_content, send_time) values
+( 4, 'waschbecken', 'birnenkompott88', 'How much is the fish?', 1561395194);
 
 
 
