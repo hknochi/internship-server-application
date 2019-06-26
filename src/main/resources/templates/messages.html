@@ -137,10 +137,10 @@
                 </li>
                 <li class="list-group-item scroll-outer">
                     <ul class="list-group scroll">
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed" th:each="user : ${users}">
                             <div>
-                                <h6 class="">@Test123, (16)m</h6>
-                                <small>Max Mustermann</small>
+                                <h6 class="" th:text="@{'@'+${user.username}+', ('+${user.yearOfBirth}+'),'+${user.gender}}"></h6>
+                                <small th:text="@{${user.firstName}+' '+${user.lastName}}"></small>
                             </div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
