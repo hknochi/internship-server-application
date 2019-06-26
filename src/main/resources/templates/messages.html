@@ -1,110 +1,202 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-    <head>
-        <title>SimpleMessage - Message</title>
-        <link rel="stylesheet" href="design.message.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" integrity="sha256-BtbhCIbtfeVWGsqxk1vOHEYXS6qcvQvLMZqjtpWUEx8=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
-
-    <body class="text-center">
-        <div class="container py-5 h-100" >
-            <div class="row" id="userList">
-                <div class="col-md-8">
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item" id="userlist">
-                            <div>
-                                <h6 class="headline" th:text="${sender}"></h6> <small>Max Mustermann (16)m</small>
+<head>
+    <title>SimpleMessage - Message</title>
+    <link rel="stylesheet" href="/design.message.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" integrity="sha256-BtbhCIbtfeVWGsqxk1vOHEYXS6qcvQvLMZqjtpWUEx8=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="text-center">
+<div class="container py-5 h-100" >
+    <div class="row" >
+        <div class="col-md-8">
+            <ul class="list-group mb-3">
+                <li class="list-group-item userlist">
+                    <div>
+                        <h6 class="headline">Chat</h6>
+                    </div>
+                </li>
+                <li class="list-group-item scroll-outer">
+                    <div class="row scroll">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>This is a message from Sender X...</p>
+                                </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <p>This is a message from Sender X...</p>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
                                 </div>
-                                <div class="col-md-8"></div>
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <p>Hi X this is another message ...</p>
-
-                                        </div>
-                                    </div>
+                                <div class="card-body">
+                                    <p>Hi X this is another message ...</p>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <p>...</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-8"></div>
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <p>...</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" placeholder="type something...">
                             </div>
-                            <button type="submit" class="btn btn-primary px-4 ">send</button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item" id="userlist">
-                            <div>
-                                <h6 class="headline" >Userlist</h6> <small>Write with...</small>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
                             </div>
-                        </li>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="my-card-header">
+                                    <small class="username">@username</small>
+                                    <small class="time">13:48</small>
+                                </div>
+                                <div class="card-body">
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                </li>
+                <form>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed userlist" id="sendForm">
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="type something...">
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4 ">send</button>
+                    </li>
+                </form>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group mb-3">
+                <li class="list-group-item userlist">
+                    <div>
+                        <h6 class="headline" >Userlist</h6>
+                    </div>
+                </li>
+                <li class="list-group-item scroll-outer">
+                    <ul class="list-group scroll">
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="">@Test123, (16)m</h6>
                                 <small>Max Mustermann</small>
                             </div>
-                            <div class="text-muted btn btn-light" id="">4</div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="">@Nickname, (...)f</h6>
                                 <small>Firstname Lastname</small>
                             </div>
-                            <div class="text-muted btn btn-light">5</div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="">@Nickname, (...)d</h6>
                                 <small>Firstname Lastname</small>
                             </div>
-                            <div class="text-muted btn btn-light">2</div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="">...</h6>
                                 <small>...</small>
                             </div>
-                            <div class="text-muted btn btn-light">3</div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="">...</h6>
+                                <small>...</small>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="">...</h6>
+                                <small>...</small>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="">...</h6>
+                                <small>...</small>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="">...</h6>
+                                <small>...</small>
+                            </div>
                         </li>
                     </ul>
-                </div>
-            </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed userlist">
+                    Scroll to see all users ...
+                </li>
+                </li>
+            </ul>
         </div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
 </html>
